@@ -19,6 +19,7 @@ import com.esa.harita_son.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.Marker
+import java.nio.charset.CoderMalfunctionError
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
@@ -26,6 +27,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     private lateinit var lastLocation: Location
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    val AysimaBebek = LatLng(40.954,39.8655) //yomra
+    val EmirEfeBebek = LatLng(40.9444,40.2647)//of
+    val AliyeBebek = LatLng(41.0478,39.2751)//vakfikebir
+    val EymenBebek = LatLng(40.8859,39.2907)//tonya
+    val GulsumBebek = LatLng(40.8142,39.6107)//maçka
+    val NuriBebek = LatLng(40.9546,39.9375)//araklı
+
+    private var locationArrayList: ArrayList<LatLng?>? = null
     companion object {
         private const val LOCATION_REQUEST_CODE = 1
     }
@@ -35,6 +44,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_maps); // Bu satırı yazınca hiç çalışmıyor.
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,17 +55,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         mapFragment.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        locationArrayList = java.util.ArrayList()
+        locationArrayList!!.add(AysimaBebek)
+        locationArrayList!!.add(EmirEfeBebek)
+        locationArrayList!!.add(AliyeBebek)
+        locationArrayList!!.add(EymenBebek)
+        locationArrayList!!.add(GulsumBebek)
+        locationArrayList!!.add(NuriBebek)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+        for(i in locationArrayList!!.indices){
+            mMap.addMarker(MarkerOptions().position(locationArrayList!![i]!!).title("SMA"))
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(locationArrayList!!.get(i)!!))
+        }
 
         // Add a marker in Sydney and move the camera
 //        val sydney = LatLng(-34.0, 151.0)
 //        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
-        mMap.uiSettings.isMapToolbarEnabled = true
+        //mMap.uiSettings.isMapToolbarEnabled = true
+        mMap.uiSettings.isZoomControlsEnabled = true
         mMap.setOnMarkerClickListener(this)
         setUpMap()
     }
