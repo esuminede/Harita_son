@@ -65,6 +65,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.runtime.saved.instance.state)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.material)
+    implementation(libs.transportation.consumer)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,8 +75,14 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     //map dependencies
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    implementation("com.github.jd-alexander:android-google-maps-services:1.1.0")
+    implementation ("com.github.jd-alexander:Google-Directions-Android:1.2")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation ("com.directions.route:0.2.1")
 }
